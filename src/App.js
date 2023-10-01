@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./components/Home";
+import Error from "./pages/Error";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import fetchData from "./api/fetchData";
+import { getImageConfig, getGenreList } from "./Store/HomeSlice";
+import useFetch from "./api/useFetch";
 
 function App() {
+  const { data } = useFetch("/genre/tv/list");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    let allGenres = {};
+    fetchData("/configuration").then((data) => {
+      const base_url = data.images?.base_url + "original";
+      dispatch(getImageConfig(base_url));
+    });
+    const genresNames = data?.genres?.map((item) => {
+      return (allGenres[item.id] = item);
+    });
+
+    dispatch(getGenreList(allGenres));
+  }, [dispatch, data]);
+  const routes = createBrowserRouter([
+    { path: "/", element: <Home />, errorElement: <Error /> },
+  ]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RouterProvider router={routes}>
+      <div className="App"></div>
+    </RouterProvider>
   );
 }
 

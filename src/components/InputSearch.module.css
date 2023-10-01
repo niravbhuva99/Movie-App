@@ -1,0 +1,7 @@
+.MuiFormControl-root > .MuiInputBase-root input {
+  border-radius: 20%;
+}
+
+.MuiFormControl-root label {
+  color: whitesmoke;
+}
