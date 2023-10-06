@@ -43,7 +43,7 @@ function DrawerAppBar(props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
+        MovieFlex
       </Typography>
       <Divider />
       <List>
@@ -63,6 +63,7 @@ function DrawerAppBar(props) {
       sx={{
         display: "flex",
         position: "sticky",
+        top: 0,
         width: "100%",
         height: "70px",
         zIndex: 10,
@@ -78,7 +79,6 @@ function DrawerAppBar(props) {
       <AppBar
         sx={{
           height: "inherit",
-          width: "100%",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",

@@ -1,5 +1,5 @@
 .MuiBox-root.hidden {
-  transform: translateY(-100%);
+  transform: translateY(-90%);
 }
 .MuiInputBase-root input {
   color: whitesmoke;

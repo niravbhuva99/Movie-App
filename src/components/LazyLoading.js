@@ -3,11 +3,15 @@ import React from "react";
 import LazyLoad from "react-lazy-load";
 import "./LazyLoading.css";
 const LazyLoading = ({ src }) => (
-  <Box sx={{ position: "absolute", top: 0, height: "100%" }}>
-    <LazyLoad>
-      <img src={src} alt="" style={{ height: "100%" }} />
-    </LazyLoad>
-  </Box>
+  <LazyLoad>
+    <img
+      src={
+        src ||
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZa6iS4YcxZgCHJppoj_CCGT5Ofv_A2qRc_t_gIDOo&s"
+      }
+      alt=""
+    />
+  </LazyLoad>
 );
 
 export default LazyLoading;

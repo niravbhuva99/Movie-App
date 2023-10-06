@@ -9,7 +9,6 @@ const Header = () => {
   return (
     <React.Fragment>
       <div className={styles.header}>
-        <Navbar />
         <Banner />
         <div className={styles.effect}></div>
         <SearchBar />

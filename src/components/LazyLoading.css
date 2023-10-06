@@ -1,7 +1,8 @@
 .LazyLoad {
-  height: inherit;
+  height: 100%;
 }
 .LazyLoad img {
+  /* margin-top: 50px; */
   object-fit: cover;
   object-position: center;
 }

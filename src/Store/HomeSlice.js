@@ -3,6 +3,7 @@ const initialState = {
   url: "",
   genre: "",
   imgUrl: "",
+  videoData: "",
 };
 const HomeSlice = createSlice({
   name: "home",
@@ -17,7 +18,11 @@ const HomeSlice = createSlice({
     getGenreList(state, action) {
       state.genre = action.payload;
     },
+    getData(state, action) {
+      state.videoData = action.payload;
+    },
   },
 });
 export default HomeSlice.reducer;
-export const { getImageConfig, getUrl, getGenreList } = HomeSlice.actions;
+export const { getImageConfig, getUrl, getGenreList, getData } =
+  HomeSlice.actions;

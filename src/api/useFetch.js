@@ -14,7 +14,7 @@ const useFetch = (url) => {
         setTimeout(() => {
           setLoading(false);
           setData(res);
-        }, 2000);
+        }, 0);
       })
       .catch((err) => {
         setError("something went wrong");

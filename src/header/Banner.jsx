@@ -26,7 +26,7 @@ const Banner = () => {
         top: 0,
       }}
     >
-      {!loading && <LazyLoading src={imgPath} />}
+      {!loading && <LazyLoading src={imgPath} width="100%" />}
 
       <div className={style.overlay}></div>
     </Box>

@@ -5,7 +5,7 @@ const useScroll = () => {
     x: 0,
     y: 0,
     lastX: 0,
-    lastY: 0,
+    lastY: 500,
   });
 
   // set up event listeners

@@ -12,6 +12,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import SkeletonCom from "./Skeleton";
 import React, { useRef, useState } from "react";
 import useFetch from "../api/useFetch";
 import { useSelector } from "react-redux";
@@ -19,14 +20,15 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import LazyLoad from "react-lazy-load";
 import LazyLoading from "./LazyLoading";
+import { useNavigate } from "react-router-dom";
 
-const Carousel = ({ setTerm, data, loading, title, cat2, cat1 }) => {
+const Carousel = ({ setTerm, data, loading, title, cat2, cat1, term }) => {
   // const { data, loading } = useFetch(`/trending/${term}/day`);
+  const navigate = useNavigate();
   const { genre: genres } = useSelector((state) => state.home);
   const { imgUrl } = useSelector((state) => state.home);
   const [active, setActive] = useState({ movie: false, tv: false });
   const CarouselContainer = useRef();
-  console.log(loading, data);
   const movieHandle = () => {
     setActive((prev) => {
       return {
@@ -46,61 +48,7 @@ const Carousel = ({ setTerm, data, loading, title, cat2, cat1 }) => {
     });
     setTerm("tv");
   };
-  const skeleton = (i) => {
-    return (
-      <Box
-        key={i}
-        sx={{
-          position: "relative",
-          zIndex: 15,
-          height: "100%",
-        }}
-      >
-        {/* <Skeleton
-          variant="rectangular"
-          minWidth="100%"
-          height="100%"
-          sx={{ bgcolor: "grey.800", position: "absolute", top: 0 }}
-        />
-        <Skeleton
-          sx={{
-            bgcolor: "grey.900",
-            position: "absolute",
-            bottom: 50,
-            zIndex: 5,
-            width: "100%",
-          }}
-        />
-        <Skeleton
-          width="60%"
-          sx={{
-            bgcolor: "grey.900",
-            position: "absolute",
-            bottom: 10,
-            zIndex: 5,
-          }}
-        /> */}
 
-        <Skeleton
-          variant="rectangular"
-          width={210}
-          height="100%"
-          sx={{
-            bgcolor: "grey.800",
-            borderRadius: "5px",
-            position: "absolute",
-            top: 0,
-          }}
-        />
-        <Skeleton
-          variant="rounded"
-          width={210}
-          height={60}
-          sx={{ bgcolor: "grey.700", position: "absolute", bottom: 20 }}
-        />
-      </Box>
-    );
-  };
   const leftButtonHandle = (dir) => {
     const container = CarouselContainer.current;
     console.log(CarouselContainer.current.scrollLeft);
@@ -160,7 +108,7 @@ const Carousel = ({ setTerm, data, loading, title, cat2, cat1 }) => {
       <Box
         sx={{
           mt: 5,
-          border: "2px solid red",
+          // border: "2px solid red",
           width: "70%",
           height: "70%",
           p: 2,
@@ -194,25 +142,25 @@ const Carousel = ({ setTerm, data, loading, title, cat2, cat1 }) => {
         >
           <ChevronRightIcon sx={{ fontSize: "50px" }} />
         </IconButton>
-        {/* <IconButton sx={{ position: "absolute", top: "50%", right: 0 }}>
-          <ChevronRightIcon />
-        </IconButton> */}
+
         {loading ? (
-          <div>
-            {data?.results.map(() => (
-              <p>hello</p>
+          <Box sx={{ display: "flex", width: "100%", height: "100%" }}>
+            {[0, 1, 2, 3, 4, 5].map((item, i) => (
+              <SkeletonCom key={i} />
             ))}
-          </div>
+          </Box>
         ) : (
+          //
           <Stack
-            direction="row"
             gap={2}
-            sx={{ bgcolor: "grey.900" }}
+            // sx={{ bgcolor: "grey.900" }}
             ref={CarouselContainer}
             overflow="hidden"
+            direction="row"
           >
             {data?.results.map((item, i) => {
-              const { backdrop_path, original_title, genre_ids, name } = item;
+              const { backdrop_path, original_title, genre_ids, name, id } =
+                item;
               return (
                 <Card
                   sx={{
@@ -222,17 +170,20 @@ const Carousel = ({ setTerm, data, loading, title, cat2, cat1 }) => {
                   }}
                   key={i}
                 >
-                  <CardActionArea sx={{ height: "100%", display: "relative" }}>
+                  <CardActionArea
+                    sx={{ height: "100%", display: "relative" }}
+                    onClick={() => navigate(`/${term}/${id}`)}
+                  >
                     {/* <CardMedia
-                  component="img"
-                  height="100%"
-                  image={imgUrl + backdrop_path}
-                  alt="green iguana"
-                  sx={{
-                    position: "absolute",
-                    top: 0,
-                  }}
-                /> */}
+                component="img"
+                height="100%"
+                image={imgUrl + backdrop_path}
+                alt="green iguana"
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                }}
+              /> */}
                     <LazyLoading src={imgUrl + backdrop_path} />
                     <CardContent sx={{ position: "absolute", bottom: 0 }}>
                       <Typography

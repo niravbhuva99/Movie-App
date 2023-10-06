@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import fetchData from "./api/fetchData";
 import { getImageConfig, getGenreList } from "./Store/HomeSlice";
 import useFetch from "./api/useFetch";
+import Root from "./components/Root";
+import DetailsPage from "./components/detailspage/DetailsPage";
 
 function App() {
   const { data } = useFetch("/genre/tv/list");
@@ -24,7 +26,18 @@ function App() {
     dispatch(getGenreList(allGenres));
   }, [dispatch, data]);
   const routes = createBrowserRouter([
-    { path: "/", element: <Home />, errorElement: <Error /> },
+    {
+      path: "/",
+      element: <Root />,
+      errorElement: <Error />,
+      children: [
+        { path: "/", element: <Home /> },
+        {
+          path: "/:cat/:movieId",
+          element: <DetailsPage />,
+        },
+      ],
+    },
   ]);
   return (
     <RouterProvider router={routes}>

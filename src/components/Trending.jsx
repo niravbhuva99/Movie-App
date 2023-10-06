@@ -15,6 +15,7 @@ const Trending = () => {
       title="Trending"
       cat1="Movie"
       cat2="Tv- Shows"
+      term={term}
     />
   );
 };
