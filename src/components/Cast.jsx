@@ -15,13 +15,12 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import VideoPage from "./VideoPage";
-const Cast = ({ movieId }) => {
+const Cast = ({ movieId, cat }) => {
   const { imgUrl, videoData } = useSelector((state) => state.home);
-  const { data } = useFetch(`/movie/${movieId}/credits`);
+  const { data } = useFetch(`/${cat}/${movieId}/credits`);
   const [video, setVideos] = useState(null);
   const [url, setUrl] = useState({ show: false, key: "" });
   const carouselContainer = useRef();
-  console.log(url.show);
   const scrollHandle = (dir) => {
     const container = carouselContainer.current;
     const scrollAmount =
@@ -34,7 +33,6 @@ const Cast = ({ movieId }) => {
       behavior: "smooth",
     });
   };
-  console.log(url);
 
   useEffect(() => {
     setVideos(videoData);

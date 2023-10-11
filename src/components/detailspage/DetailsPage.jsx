@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { getData } from "../../Store/HomeSlice";
 import Cast from "../Cast";
+import Recommendations from "../Recommendations";
 const DetailsPage = () => {
   const details = [
     "Type",
@@ -36,6 +37,8 @@ const DetailsPage = () => {
       movie_id
     )}?api_key=1d4e8eb8c755ca38d2877b38507e36d9&append_to_response=videos,images`
   );
+
+  const title = cat === "tv" ? data?.name : data?.original_title;
   useEffect(() => {
     dispatch(getData(data));
   }, [data, dispatch]);
@@ -131,7 +134,7 @@ const DetailsPage = () => {
                 color="white"
                 sx={{ letterSpacing: "2px" }}
               >
-                {data?.original_title}
+                {title}
               </Typography>
               <Typography variant="h6" color="grey">
                 {data?.tagline}
@@ -198,7 +201,7 @@ const DetailsPage = () => {
                       data?.production_countries.length - 1 === i ? "" : ",";
                     return (
                       <Typography variant="h6" key={i}>
-                        {item.name + comma}{" "}
+                        {item.name + comma}
                       </Typography>
                     );
                   })}
@@ -235,7 +238,8 @@ const DetailsPage = () => {
           </Box>
         </Box>
       </Stack>
-      <Cast movieId={movie_id} />
+      <Cast movieId={movie_id} cat={cat} />
+      <Recommendations movieId={movie_id} cat={cat} />
     </Box>
   );
 };

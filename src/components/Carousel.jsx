@@ -2,14 +2,10 @@ import {
   Box,
   Button,
   ButtonGroup,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Chip,
   IconButton,
   Skeleton,
   Stack,
+  Card,
   Typography,
 } from "@mui/material";
 import SkeletonCom from "./Skeleton";
@@ -20,13 +16,10 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import LazyLoad from "react-lazy-load";
 import LazyLoading from "./LazyLoading";
+import Cards from "./Cards";
 import { useNavigate } from "react-router-dom";
-
 const Carousel = ({ setTerm, data, loading, title, cat2, cat1, term }) => {
   // const { data, loading } = useFetch(`/trending/${term}/day`);
-  const navigate = useNavigate();
-  const { genre: genres } = useSelector((state) => state.home);
-  const { imgUrl } = useSelector((state) => state.home);
   const [active, setActive] = useState({ movie: false, tv: false });
   const CarouselContainer = useRef();
   const movieHandle = () => {
@@ -162,79 +155,17 @@ const Carousel = ({ setTerm, data, loading, title, cat2, cat1, term }) => {
               const { backdrop_path, original_title, genre_ids, name, id } =
                 item;
               return (
-                <Card
-                  sx={{
-                    minWidth: 253,
-                    height: "100%",
-                    borderRadius: "15px",
+                <Cards
+                  obj={{
+                    term,
+                    backdrop_path,
+                    original_title,
+                    genre_ids,
+                    name,
+                    id,
                   }}
                   key={i}
-                >
-                  <CardActionArea
-                    sx={{ height: "100%", display: "relative" }}
-                    onClick={() => navigate(`/${term}/${id}`)}
-                  >
-                    {/* <CardMedia
-                component="img"
-                height="100%"
-                image={imgUrl + backdrop_path}
-                alt="green iguana"
-                sx={{
-                  position: "absolute",
-                  top: 0,
-                }}
-              /> */}
-                    <LazyLoading src={imgUrl + backdrop_path} />
-                    <CardContent sx={{ position: "absolute", bottom: 0 }}>
-                      <Typography
-                        gutterBottom
-                        variant="h5"
-                        component="div"
-                        color="whitesmoke"
-                        sx={{ letterSpacing: "2px" }}
-                      >
-                        {original_title || name}
-                      </Typography>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          width: "100%",
-                          flexWrap: "wrap",
-                          gap: 2,
-
-                          justifyContent: "space-around",
-                        }}
-                      >
-                        {genre_ids.map((genre, i) => {
-                          const defaultGenre = [
-                            "action",
-                            "crime",
-                            "drama",
-                            "mystery",
-                          ];
-                          if (genres[genre]?.name) {
-                            return (
-                              <Chip
-                                key={i}
-                                label={genres[genre]?.name}
-                                color="secondary"
-                              />
-                            );
-                          } else {
-                            return (
-                              <Chip
-                                key={i}
-                                label={defaultGenre[i]}
-                                color="secondary"
-                              />
-                            );
-                          }
-                        })}
-                      </Box>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
+                />
               );
             })}
           </Stack>
