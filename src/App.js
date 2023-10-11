@@ -19,9 +19,6 @@ function App() {
       const base_url = data.images?.base_url + "original";
       dispatch(getImageConfig(base_url));
     });
-    const genresNames = data?.genres?.map((item) => {
-      return (allGenres[item.id] = item);
-    });
 
     dispatch(getGenreList(allGenres));
   }, [dispatch, data]);

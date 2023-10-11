@@ -14,20 +14,17 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import useScroll from "../hooks/useScrollListener/UseScroll";
 import { useState, useEffect } from "react";
-import SearchIcon from "@mui/icons-material/Search";
 import "./Navbar.css";
-import {
-  FormControl,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  TextField,
-} from "@mui/material";
+import { Link, NavLink } from "react-router-dom";
 import InputSearch from "../components/InputSearch";
 const drawerWidth = 240;
-const navItems = ["Home", "Movie", "Tv"];
+const navItems = [
+  { text: "Home", link: "/" },
+  { text: "Movie", link: "/movie" },
+  { text: "TV", link: "/tv" },
+];
 
-function DrawerAppBar(props) {
+function DrawerAppBar() {
   const scroll = useScroll();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [navClass, setNavClass] = useState("");
@@ -42,15 +39,17 @@ function DrawerAppBar(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        MovieFlex
-      </Typography>
+      <NavLink to="/">
+        <Typography variant="h6" sx={{ my: 2 }}>
+          MovieFlex
+        </Typography>
+      </NavLink>
       <Divider />
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
+        {navItems.map((item, i) => (
+          <ListItem key={i} disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary={item} />
+              <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -103,15 +102,22 @@ function DrawerAppBar(props) {
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", sm: "block" },
+              "& a": {
+                textDecoration: "none",
+                color: "whitesmoke",
+              },
+            }}
           >
-            MovieFlex
+            <Link to="/">MovieFlex</Link>
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.map((item) => (
-              <Button key={item} sx={{ color: "#fff" }}>
-                {item}
-              </Button>
+            {navItems.map((item, i) => (
+              <Link to={item.link} key={i}>
+                <Button sx={{ color: "#fff" }}>{item.text}</Button>
+              </Link>
             ))}
           </Box>
           {/* <TextField
