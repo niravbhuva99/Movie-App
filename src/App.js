@@ -54,6 +54,7 @@ function App() {
       ],
     },
   ]);
+  console.log(process.env.REACT_APP_AUTH);
   return (
     <RouterProvider router={routes}>
       <div className="App"></div>
