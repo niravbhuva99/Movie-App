@@ -41,6 +41,7 @@ const DetailsPage = () => {
   const title = cat === "tv" ? data?.name : data?.original_title;
   useEffect(() => {
     dispatch(getData(data));
+    document.documentElement.scrollTop = 0;
   }, [data, dispatch]);
   return (
     <Box

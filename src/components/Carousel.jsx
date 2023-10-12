@@ -20,7 +20,7 @@ import Cards from "./Cards";
 import { useNavigate } from "react-router-dom";
 const Carousel = ({ setTerm, data, loading, title, cat2, cat1, term }) => {
   // const { data, loading } = useFetch(`/trending/${term}/day`);
-  const [active, setActive] = useState({ movie: false, tv: false });
+  const [active, setActive] = useState({ movie: true, tv: false });
   const CarouselContainer = useRef();
   const movieHandle = () => {
     setActive((prev) => {
@@ -60,15 +60,15 @@ const Carousel = ({ setTerm, data, loading, title, cat2, cat1, term }) => {
     <Box
       className="trending"
       sx={{
-        mt: 7,
+        mt: 2,
         display: "flex",
         flexDirection: "column",
         width: "100%",
         // justifyContent: "flex-sta",
         alignItems: "center",
-        height: "550px",
+        height: "480px",
         // border: "2px solid red",
-        mb: 3,
+        mb: 1,
       }}
     >
       <Box
@@ -100,10 +100,10 @@ const Carousel = ({ setTerm, data, loading, title, cat2, cat1, term }) => {
       </Box>
       <Box
         sx={{
-          mt: 5,
+          mt: 1,
           // border: "2px solid red",
           width: "70%",
-          height: "70%",
+          height: "100%",
           p: 2,
           overflow: "hidden",
           display: "flex",

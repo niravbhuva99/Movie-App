@@ -8,6 +8,8 @@ import { getImageConfig, getGenreList } from "./Store/HomeSlice";
 import useFetch from "./api/useFetch";
 import Root from "./components/Root";
 import DetailsPage from "./components/detailspage/DetailsPage";
+import Movie from "./components/Movie";
+import Tv from "./components/Tv";
 
 function App() {
   const { data } = useFetch("/genre/tv/list");
@@ -31,6 +33,22 @@ function App() {
         { path: "/", element: <Home /> },
         {
           path: "/:cat/:movieId",
+          element: <DetailsPage />,
+        },
+        {
+          path: "/movie",
+          element: <Movie />,
+        },
+        {
+          path: "movie/:cat/:movieId",
+          element: <DetailsPage />,
+        },
+        {
+          path: "/tv",
+          element: <Tv />,
+        },
+        {
+          path: "tv/:cat/:movieId",
           element: <DetailsPage />,
         },
       ],

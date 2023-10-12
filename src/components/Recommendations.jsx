@@ -1,17 +1,24 @@
 import { Box, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import useFetch from "../api/useFetch";
 import Cards from "./Cards";
 
 const Recommendations = ({ movieId, cat: term }) => {
   const { data } = useFetch(`/${term}/${movieId}/recommendations`);
-
+  // const InfinityScrollHandle = () => {
+  //   console.log("scrollHeight", document.documentElement.scrollHeight);
+  //   console.log("inderHeight", window.innerHeight);
+  //   console.log("scrollTop", document.documentElement.scrollTop);
+  // };
+  // useEffect(() => {
+  //   window.addEventListener("scroll", InfinityScrollHandle);
+  // });
   return (
     <Stack
       direction="column"
       sx={{
         width: "80%",
-        // border: "2px solid grey",
+        border: "2px solid grey",
         margin: "auto",
       }}
     >

@@ -5,8 +5,6 @@ import {
   Card,
   CardActionArea,
   CardContent,
-  CardMedia,
-  Chip,
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -22,22 +20,24 @@ const Cards = ({
     id,
     term,
     height = "100%",
+    original_name,
+    minWidth = 235,
   },
 }) => {
   const navigate = useNavigate();
   const { imgUrl } = useSelector((state) => state.home);
   const { genre: genres } = useSelector((state) => state.home);
-  console.log(term);
+
   return (
     <Card
       sx={{
-        minWidth: "253px",
+        minWidth,
         height,
         borderRadius: "15px",
       }}
     >
       <CardActionArea
-        sx={{ height: "100%", display: "relative" }}
+        sx={{ height: "100%", display: "relative", width: minWidth }}
         onClick={() => navigate(`/${term}/${id}`)}
       >
         {/* <CardMedia
@@ -59,7 +59,7 @@ const Cards = ({
             color="whitesmoke"
             sx={{ letterSpacing: "2px" }}
           >
-            {original_title || name}
+            {original_title || name || original_name}
           </Typography>
           <Box
             sx={{
@@ -100,6 +100,7 @@ const Cards = ({
               //     </Button>
               //   );
               // }
+              return null;
             })}
           </Box>
         </CardContent>
