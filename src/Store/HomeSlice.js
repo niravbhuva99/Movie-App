@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   url: "",
-  genre: "",
+  genres: "",
   imgUrl: "",
   videoData: "",
+  tvGenreList: [],
 };
 const HomeSlice = createSlice({
   name: "home",
@@ -16,13 +17,16 @@ const HomeSlice = createSlice({
       state.url = action.payload;
     },
     getGenreList(state, action) {
-      state.genre = action.payload;
+      state.genres = action.payload;
     },
     getData(state, action) {
       state.videoData = action.payload;
     },
+    getTvGenreList(state, action) {
+      state.tvGenreList = action.payload;
+    },
   },
 });
 export default HomeSlice.reducer;
-export const { getImageConfig, getUrl, getGenreList, getData } =
+export const { getImageConfig, getUrl, getGenreList, getData, getTvGenreList } =
   HomeSlice.actions;

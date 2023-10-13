@@ -26,7 +26,7 @@ const Cards = ({
 }) => {
   const navigate = useNavigate();
   const { imgUrl } = useSelector((state) => state.home);
-  const { genre: genres } = useSelector((state) => state.home);
+  const { genres } = useSelector((state) => state.home);
 
   return (
     <Card
@@ -34,6 +34,8 @@ const Cards = ({
         minWidth,
         height,
         borderRadius: "15px",
+        bgcolor: "black",
+        borderRadius: 0,
       }}
     >
       <CardActionArea

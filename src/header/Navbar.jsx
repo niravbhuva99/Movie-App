@@ -37,15 +37,6 @@ function DrawerAppBar() {
     setMobileOpen((prevState) => !prevState);
   };
 
-  let animals = [{ type: "lion" }, "tiger"];
-
-  let clone = [...animals];
-  clone[0].type = "bear";
-  clone[1] = "sheep";
-  console.log(animals[0] === clone[0]);
-  console.log(animals[1] === clone[1]);
-  console.log("anilahn", animals);
-  console.log("clonw", clone);
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <NavLink to="/">

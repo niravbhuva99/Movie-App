@@ -5,23 +5,43 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
+  OutlinedInput,
+  Pagination,
   Select,
   Stack,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+
 import Cards from "./Cards";
+import { useSelector } from "react-redux";
 const Movie = ({ cat = "movie" }) => {
-  console.log(cat);
   const [page, setPage] = useState(1);
-  const { data, isLoading } = useFetch(
+  const [genrePage, setGenrePage] = useState(1);
+  const [selectedGenre, setSelectedGenre] = useState([]);
+  const [selectedMovie, setSelectedMovie] = useState(false);
+  const [moviesData, setMoviesData] = useState([]);
+  const { genres } = useSelector((state) => state.home);
+  const { tvGenreList } = useSelector((state) => state.home);
+  const displayGenre = cat === "movie" ? genres : tvGenreList;
+
+  const { data, loading } = useFetch(
     `/${cat}/popular?language=en-US&page=${page}`
   );
-  const [moviesData, setMoviesData] = useState([]);
-  console.log(data);
+
+  const { data: genreData, loading: genreLoading } = useFetch(
+    `/discover/${cat}?&page=${genrePage}&with_genres=${selectedGenre.join(",")}`
+  );
+
+  const displayMovies = selectedMovie ? genreData?.results : moviesData;
+
+  const genrePageHandle = (_, value) => {
+    setGenrePage(value);
+  };
+
   const handleScroll = () => {
     if (
-      !isLoading &&
+      !loading &&
       window.innerHeight + document.documentElement.scrollTop >=
         document.documentElement.scrollHeight - 100
     ) {
@@ -35,24 +55,20 @@ const Movie = ({ cat = "movie" }) => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [isLoading]);
+  }, []);
 
   useEffect(() => {
-    if (!isLoading && data && data.results) {
-      setMoviesData((prevData) => [...prevData, ...data.results]);
+    if (!loading && data && data.results) {
+      setMoviesData((prevData) => [...prevData, ...data?.results]);
     }
-  }, [data, isLoading]);
-
-  const [age, setAge] = useState("");
+  }, [data, loading]);
 
   const handleGenre = (event) => {
-    setAge(event.target.value);
+    setSelectedMovie(true);
+    const value = event.target.value;
+    setSelectedGenre(typeof value === "number" ? value.split(",") : value);
   };
-  const [sort, setsort] = useState("");
 
-  const handleSorting = (event) => {
-    setAge(event.target.value);
-  };
   return (
     <Box sx={{}}>
       <Stack
@@ -67,60 +83,30 @@ const Movie = ({ cat = "movie" }) => {
           Explore Movies
         </Typography>
         <Box sx={{ display: "flex", gap: 3 }}>
-          <Box>
-            <FormControl
-              variant="standard"
-              sx={{ m: 1, minWidth: 220, bgcolor: "grey", color: "whitesmoke" }}
+          <FormControl sx={{ m: 1, width: 300 }}>
+            <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+            <Select
+              labelId="demo-multiple-name-label"
+              id="demo-multiple-name"
+              value={selectedGenre}
+              onChange={handleGenre}
+              multiple
+              input={
+                <OutlinedInput
+                  label="Select Genres"
+                  sx={{
+                    color: "white",
+                  }}
+                />
+              }
             >
-              <InputLabel
-                id="demo-simple-select-standard-label"
-                sx={{ color: "whitesmoke" }}
-              >
-                Select Genre
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-standard-label"
-                id="demo-simple-select-standard"
-                value={age}
-                onChange={handleGenre}
-                label="Selec Genre"
-              >
-                <MenuItem value="">
-                  <em>None</em>
+              {Object.keys(displayGenre).map((name) => (
+                <MenuItem key={name} value={displayGenre[name].id}>
+                  {name}
                 </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-          <Box sx={{ marginRight: 3 }}>
-            <FormControl
-              variant="standard"
-              sx={{ m: 1, minWidth: 220, bgcolor: "grey", color: "whitesmoke" }}
-            >
-              <InputLabel
-                id="demo-simple-select-standard-label"
-                sx={{ color: "whitesmoke" }}
-              >
-                Sort By
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-standard-label"
-                id="demo-simple-select-standard"
-                value={age}
-                onChange={handleSorting}
-                label="Selec Genre"
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
+              ))}
+            </Select>
+          </FormControl>
         </Box>
       </Stack>
       <Box
@@ -132,15 +118,12 @@ const Movie = ({ cat = "movie" }) => {
           justifyContent: "center",
         }}
       >
-        {
-          // backdrop_path,
-          // original_title,
-          // genre_ids,
-          // name,
-          // id,
-          // term,
-          // height = "100%",
-          moviesData.map((item, i) => {
+        {genreLoading ? (
+          <Typography variant="h1" color="green">
+            Loading ::::
+          </Typography>
+        ) : displayMovies?.length > 0 ? (
+          displayMovies?.map((item, i) => {
             const {
               backdrop_path,
               original_title,
@@ -165,8 +148,34 @@ const Movie = ({ cat = "movie" }) => {
               />
             );
           })
-        }
+        ) : (
+          <Typography variant="h1" color="green">
+            404 Not found
+          </Typography>
+        )}
       </Box>
+      {selectedMovie && (
+        <Stack
+          spacing={2}
+          direction="row"
+          sx={{
+            justifyContent: "center",
+            alignItems: "center",
+            m: "45px 0",
+          }}
+        >
+          <Typography color="primary">Page: </Typography>
+          <Pagination
+            color="primary"
+            count={10}
+            variant="outlined"
+            shape="rounded"
+            size="large"
+            page={genrePage}
+            onChange={genrePageHandle}
+          />
+        </Stack>
+      )}
     </Box>
   );
 };
