@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import useFetch from "../api/useFetch";
 import {
   Box,
   FormControl,
   InputLabel,
+  Menu,
   MenuItem,
   OutlinedInput,
   Pagination,
   Select,
   Stack,
+  TextField,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
@@ -16,6 +18,7 @@ import { useState } from "react";
 import Cards from "./Cards";
 import { useSelector } from "react-redux";
 const Movie = ({ cat = "movie" }) => {
+  const selectField = useRef();
   const [page, setPage] = useState(1);
   const [genrePage, setGenrePage] = useState(1);
   const [selectedGenre, setSelectedGenre] = useState([]);
@@ -62,51 +65,96 @@ const Movie = ({ cat = "movie" }) => {
       setMoviesData((prevData) => [...prevData, ...data?.results]);
     }
   }, [data, loading]);
-
   const handleGenre = (event) => {
     setSelectedMovie(true);
+    // const cursorPosition = 3; // Change this to your desired cursor position
+    const inputElement =
+      selectField.current.querySelector(".MuiInputBase-root");
+    inputElement.focus();
+
     const value = event.target.value;
+
     setSelectedGenre(typeof value === "number" ? value.split(",") : value);
   };
 
   return (
-    <Box sx={{}}>
+    <Box>
       <Stack
         sx={{
           width: "100vw",
           justifyContent: "space-between",
           color: "whitesmoke",
+          p: 2,
         }}
         direction="row"
       >
         <Typography variant="h4" ml={5}>
           Explore Movies
         </Typography>
-        <Box sx={{ display: "flex", gap: 3 }}>
-          <FormControl sx={{ m: 1, width: 300 }}>
-            <InputLabel id="demo-multiple-name-label">Name</InputLabel>
-            <Select
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <Box width="200px">
+            <TextField
+              select
+              ref={selectField}
               labelId="demo-multiple-name-label"
               id="demo-multiple-name"
               value={selectedGenre}
               onChange={handleGenre}
-              multiple
-              input={
-                <OutlinedInput
-                  label="Select Genres"
-                  sx={{
-                    color: "white",
-                  }}
-                />
-              }
+              fullWidth
+              SelectProps={{
+                multiple: true,
+              }}
+              placeholder="Genre"
+              sx={{
+                // bgcolor: "green",
+                "& .MuiInputBase-root": {
+                  color: "whitesmoke",
+                },
+              }}
+
+              // input={
+              //   <OutlinedInput
+              //     label="Select Genres"
+              //     sx={{
+              //       color: "white",
+              //     }}
+              //   />
+              // }
             >
               {Object.keys(displayGenre).map((name) => (
                 <MenuItem key={name} value={displayGenre[name].id}>
                   {name}
                 </MenuItem>
               ))}
-            </Select>
-          </FormControl>
+            </TextField>
+          </Box>
+          <Box width="250px">
+            <TextField
+              fullWidth
+              select
+              ref={selectField}
+              labelId="demo-multiple-name-label"
+              id="demo-multiple-name"
+              value={selectedGenre}
+              onChange={handleGenre}
+              SelectProps={{
+                multiple: true,
+              }}
+              sx={{
+                bgcolor: "green",
+                "& .MuiInputBase-root": {
+                  color: "whitesmoke",
+                },
+              }}
+              placeholder="Select Genre"
+            >
+              {Object.keys(displayGenre).map((name) => (
+                <MenuItem key={name} value={displayGenre[name].id}>
+                  {name}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Box>
         </Box>
       </Stack>
       <Box
