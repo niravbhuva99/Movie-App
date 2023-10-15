@@ -8,17 +8,22 @@ import {
   MenuItem,
   OutlinedInput,
   Pagination,
-  Select,
   Stack,
+  Select,
   TextField,
   Typography,
+  Skeleton,
+  Avatar,
+  LinearProgress,
 } from "@mui/material";
 import { useState } from "react";
 
 import Cards from "./Cards";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchbar } from "../Store/HomeSlice";
+
 const Movie = ({ cat = "movie" }) => {
-  const selectField = useRef();
+  const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [genrePage, setGenrePage] = useState(1);
   const [selectedGenre, setSelectedGenre] = useState([]);
@@ -26,12 +31,16 @@ const Movie = ({ cat = "movie" }) => {
   const [moviesData, setMoviesData] = useState([]);
   const { genres } = useSelector((state) => state.home);
   const { tvGenreList } = useSelector((state) => state.home);
+  const [open, setOpen] = useState(false);
   const displayGenre = cat === "movie" ? genres : tvGenreList;
 
   const { data, loading } = useFetch(
     `/${cat}/popular?language=en-US&page=${page}`
   );
-
+  useEffect(() => {
+    dispatch(setSearchbar(true));
+    console.log("###");
+  }, []);
   const { data: genreData, loading: genreLoading } = useFetch(
     `/discover/${cat}?&page=${genrePage}&with_genres=${selectedGenre.join(",")}`
   );
@@ -67,16 +76,17 @@ const Movie = ({ cat = "movie" }) => {
   }, [data, loading]);
   const handleGenre = (event) => {
     setSelectedMovie(true);
-    // const cursorPosition = 3; // Change this to your desired cursor position
-    const inputElement =
-      selectField.current.querySelector(".MuiInputBase-root");
-    inputElement.focus();
-
     const value = event.target.value;
-
     setSelectedGenre(typeof value === "number" ? value.split(",") : value);
+    handleClose();
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
 
+  const handleOpen = () => {
+    setOpen(true);
+  };
   return (
     <Box>
       <Stack
@@ -91,69 +101,42 @@ const Movie = ({ cat = "movie" }) => {
         <Typography variant="h4" ml={5}>
           Explore Movies
         </Typography>
-        <Box sx={{ display: "flex", gap: 1 }}>
-          <Box width="200px">
-            <TextField
-              select
-              ref={selectField}
-              labelId="demo-multiple-name-label"
-              id="demo-multiple-name"
-              value={selectedGenre}
-              onChange={handleGenre}
-              fullWidth
-              SelectProps={{
-                multiple: true,
-              }}
-              placeholder="Genre"
-              sx={{
-                // bgcolor: "green",
-                "& .MuiInputBase-root": {
-                  color: "whitesmoke",
-                },
-              }}
-
-              // input={
-              //   <OutlinedInput
-              //     label="Select Genres"
-              //     sx={{
-              //       color: "white",
-              //     }}
-              //   />
-              // }
-            >
-              {Object.keys(displayGenre).map((name) => (
-                <MenuItem key={name} value={displayGenre[name].id}>
-                  {name}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Box>
+        <Box sx={{ display: "flex", gap: 1, mr: 2 }}>
           <Box width="250px">
-            <TextField
-              fullWidth
-              select
-              ref={selectField}
-              labelId="demo-multiple-name-label"
-              id="demo-multiple-name"
-              value={selectedGenre}
-              onChange={handleGenre}
-              SelectProps={{
-                multiple: true,
-              }}
-              sx={{
-                bgcolor: "green",
-                "& .MuiInputBase-root": {
-                  color: "whitesmoke",
-                },
-              }}
-              placeholder="Select Genre"
-            >
-              {Object.keys(displayGenre).map((name) => (
-                <MenuItem key={name} value={displayGenre[name].id}>
-                  {name}
-                </MenuItem>
-              ))}
-            </TextField>
+            <FormControl fullWidth sx={{ m: 1 }}>
+              <InputLabel
+                id="demo-controlled-open-select-label"
+                sx={{ color: "whitesmoke" }}
+              >
+                Select Genres
+              </InputLabel>
+              <Select
+                fullWidth
+                label="Select Genres"
+                value={selectedGenre}
+                onChange={handleGenre}
+                multiple
+                open={open}
+                onClose={handleClose}
+                onOpen={handleOpen}
+                sx={{
+                  bgcolor: "green",
+                  "& .MuiInputBase-root": {
+                    color: "whitesmoke",
+                  },
+                  "& .MuiFormLabel-root": {
+                    color: "whitesmoke",
+                  },
+                }}
+                placeholder="Select Genre"
+              >
+                {Object.keys(displayGenre).map((name) => (
+                  <MenuItem key={name} value={displayGenre[name].id}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Box>
         </Box>
       </Stack>
@@ -167,9 +150,19 @@ const Movie = ({ cat = "movie" }) => {
         }}
       >
         {genreLoading ? (
-          <Typography variant="h1" color="green">
-            Loading ::::
-          </Typography>
+          <Box
+            sx={{
+              bgcolor: "#121212",
+              p: 8,
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Stack sx={{ width: "100%" }}>
+              <LinearProgress color="success" sx={{ height: 100 }} />
+            </Stack>
+          </Box>
         ) : displayMovies?.length > 0 ? (
           displayMovies?.map((item, i) => {
             const {
@@ -214,8 +207,13 @@ const Movie = ({ cat = "movie" }) => {
         >
           <Typography color="primary">Page: </Typography>
           <Pagination
+            sx={{
+              "& .MuiButtonBase-root": {
+                color: "whitesmoke",
+              },
+            }}
             color="primary"
-            count={10}
+            count={genreData?.total_results}
             variant="outlined"
             shape="rounded"
             size="large"

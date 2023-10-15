@@ -21,7 +21,7 @@ const SearchBar = () => {
       <Typography variant="h2" sx={{ fontWeight: 700, letterSpacing: "3px" }}>
         Welcome
       </Typography>
-      <Typography variant="body2">
+      <Typography variant="body2" sx={{ mb: 5 }}>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero numquam
         quia consequuntur odio. Cumque eius excepturi optio quasi natus iusto.
       </Typography>

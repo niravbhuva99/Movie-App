@@ -5,6 +5,7 @@ const initialState = {
   imgUrl: "",
   videoData: "",
   tvGenreList: [],
+  showSearchbar: false,
 };
 const HomeSlice = createSlice({
   name: "home",
@@ -25,8 +26,17 @@ const HomeSlice = createSlice({
     getTvGenreList(state, action) {
       state.tvGenreList = action.payload;
     },
+    setSearchbar(state, action) {
+      state.showSearchbar = action.payload;
+    },
   },
 });
 export default HomeSlice.reducer;
-export const { getImageConfig, getUrl, getGenreList, getData, getTvGenreList } =
-  HomeSlice.actions;
+export const {
+  getImageConfig,
+  getUrl,
+  getGenreList,
+  getData,
+  getTvGenreList,
+  setSearchbar,
+} = HomeSlice.actions;
