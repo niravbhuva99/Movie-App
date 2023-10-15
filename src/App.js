@@ -50,18 +50,10 @@ function App() {
           path: "/movie",
           element: <Movie />,
         },
-        // {
-        //   path: "movie/:cat/:movieId",
-        //   element: <DetailsPage />,
-        // },
         {
           path: "/tv",
           element: <Tv />,
         },
-        // {
-        //   path: "tv/:cat/:movieId",
-        //   element: <DetailsPage />,
-        // },
       ],
     },
   ]);

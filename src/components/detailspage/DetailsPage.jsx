@@ -16,7 +16,7 @@ import LazyLoading from "../LazyLoading";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { getData } from "../../Store/HomeSlice";
+import { getData, setSearchbar } from "../../Store/HomeSlice";
 import Cast from "../Cast";
 import Recommendations from "../Recommendations";
 const DetailsPage = () => {
@@ -29,8 +29,9 @@ const DetailsPage = () => {
     "overview",
   ];
   // const { genre } = useSelector((state) => state.home);
-  const { imgUrl } = useSelector((state) => state.home);
+  const { imgUrl, showSearchbar } = useSelector((state) => state.home);
   const { movieId: movie_id, cat } = useParams();
+
   const dispatch = useDispatch();
   const { data } = useFetch(
     `/${cat}/${Number(
@@ -43,12 +44,14 @@ const DetailsPage = () => {
     dispatch(getData(data));
     document.documentElement.scrollTop = 0;
   }, [data, dispatch]);
+  useEffect(() => {
+    dispatch(setSearchbar(true));
+  }, []);
   return (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
-        // border: "2px solid red",
         position: "absolute",
         top: 0,
         width: "100%",
@@ -59,9 +62,10 @@ const DetailsPage = () => {
         sx={{
           width: "100%",
           overflow: "hidden",
-          // border: "2px solid red",
           position: "relative",
-          height: "800px",
+          height: {
+            md: "800px",
+          },
         }}
         alignItems="center"
       >
@@ -144,7 +148,11 @@ const DetailsPage = () => {
             <Box sx={{ mt: 2 }}>
               <Card
                 sx={{
-                  minWidth: "400px",
+                  MaxWidth: {
+                    md: "400px",
+                    sm: "100px",
+                  },
+
                   display: "flex",
                   padding: 2,
                   bgcolor: "black",

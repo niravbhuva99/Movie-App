@@ -12,12 +12,18 @@ import {
   Select,
   TextField,
   Typography,
+  Skeleton,
+  Avatar,
+  LinearProgress,
 } from "@mui/material";
 import { useState } from "react";
 
 import Cards from "./Cards";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchbar } from "../Store/HomeSlice";
+
 const Movie = ({ cat = "movie" }) => {
+  const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [genrePage, setGenrePage] = useState(1);
   const [selectedGenre, setSelectedGenre] = useState([]);
@@ -31,7 +37,10 @@ const Movie = ({ cat = "movie" }) => {
   const { data, loading } = useFetch(
     `/${cat}/popular?language=en-US&page=${page}`
   );
-
+  useEffect(() => {
+    dispatch(setSearchbar(true));
+    console.log("###");
+  }, []);
   const { data: genreData, loading: genreLoading } = useFetch(
     `/discover/${cat}?&page=${genrePage}&with_genres=${selectedGenre.join(",")}`
   );
@@ -141,9 +150,19 @@ const Movie = ({ cat = "movie" }) => {
         }}
       >
         {genreLoading ? (
-          <Typography variant="h1" color="green">
-            Loading ::::
-          </Typography>
+          <Box
+            sx={{
+              bgcolor: "#121212",
+              p: 8,
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Stack sx={{ width: "100%" }}>
+              <LinearProgress color="success" sx={{ height: 100 }} />
+            </Stack>
+          </Box>
         ) : displayMovies?.length > 0 ? (
           displayMovies?.map((item, i) => {
             const {

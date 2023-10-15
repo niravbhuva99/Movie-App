@@ -86,13 +86,13 @@ const Carousel = ({ setTerm, data, loading, title, cat2, cat1, term }) => {
         <ButtonGroup variant="text" aria-label="outlined primary button group">
           <Button
             onClick={movieHandle}
-            style={{ color: active.movie ? "purple" : "" }}
+            style={{ color: active.movie ? "green" : "" }}
           >
             {cat1}
           </Button>
           <Button
             onClick={tvHandle}
-            style={{ color: active.tv ? "purple" : "" }}
+            style={{ color: active.tv ? "green" : "" }}
           >
             {cat2}
           </Button>
