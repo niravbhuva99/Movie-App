@@ -77,7 +77,7 @@ const DetailsPage = () => {
             objectFit: "fill",
           }}
         >
-          <LazyLoading src={imgUrl + data?.images.posters[0]?.file_path} />
+          <LazyLoading src={imgUrl + data?.images?.posters[0]?.file_path} />
         </Box>
         <Box
           sx={{
@@ -117,7 +117,7 @@ const DetailsPage = () => {
               elevation={21}
             >
               <LazyLoading
-                src={imgUrl + data?.images.posters[0].file_path}
+                src={imgUrl + data?.images?.posters[0]?.file_path}
                 style={{ height: "100%" }}
               />
             </Paper>
@@ -205,7 +205,7 @@ const DetailsPage = () => {
                   {cat.slice(0, 1).toUpperCase() + cat.slice(1).toUpperCase()}
                 </Typography>
                 <Box sx={{ display: "flex" }}>
-                  {data?.production_countries.map((item, i) => {
+                  {data?.production_countries?.map((item, i) => {
                     const comma =
                       data?.production_countries.length - 1 === i ? "" : ",";
                     return (
@@ -216,7 +216,7 @@ const DetailsPage = () => {
                   })}
                 </Box>
                 <Box sx={{ display: "flex" }}>
-                  {data?.genres.map((item, i) => {
+                  {data?.genres?.map((item, i) => {
                     const comma = data?.genres.length - 1 === i ? "" : ",";
                     return (
                       <Typography variant="h6" key={i} sx={{ p: 0 }}>
@@ -229,7 +229,7 @@ const DetailsPage = () => {
                   {dayjs(data?.release_date).format("MMM DD,YY")}
                 </Typography>
                 <Box sx={{ display: "flex" }}>
-                  {data?.production_companies.map((item, i) => {
+                  {data?.production_companies?.map((item, i) => {
                     const comma =
                       data?.production_companies.length - 1 === i ? "" : ",";
                     return (

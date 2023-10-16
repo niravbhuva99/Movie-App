@@ -105,7 +105,7 @@ const Cast = ({ movieId, cat }) => {
             flexDirection: "row",
           }}
         >
-          {data?.cast.map((person, i) => {
+          {data?.cast?.map((person, i) => {
             const { profile_path, original_name, character } = person;
             const imageUrl = imgUrl + profile_path;
             return (

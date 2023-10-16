@@ -17,7 +17,7 @@ const Recommendations = ({ movieId, cat: term }) => {
   // });
   return (
     <React.Fragment>
-      {data?.results.length > 0 && (
+      {data?.results?.length > 0 && (
         <Stack
           direction="column"
           sx={{
