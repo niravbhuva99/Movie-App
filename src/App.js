@@ -41,7 +41,7 @@ function App() {
       element: <Root />,
       errorElement: <Error />,
       children: [
-        { path: "/", element: <Home /> },
+        { index: true, element: <Home /> },
         {
           path: "/:cat/:movieId",
           element: <DetailsPage />,
