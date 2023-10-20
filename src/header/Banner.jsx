@@ -1,10 +1,8 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import useFetch from "../api/useFetch";
 import style from "./Banner.module.css";
 import React, { useEffect, useState } from "react";
-import fetchData from "../api/fetchData";
-import { useDispatch, useSelector } from "react-redux";
-import { getImageConfig, getUrl } from "../Store/HomeSlice";
+import { useSelector } from "react-redux";
 import LazyLoading from "../components/LazyLoading";
 const Banner = () => {
   const dataFromRedux = useSelector((state) => state.home);
@@ -21,7 +19,10 @@ const Banner = () => {
     <Box
       sx={{
         width: "100%",
-        height: "100%",
+        height: {
+          xs: "400px",
+          md: "100%",
+        },
         position: "absolute",
         top: 0,
       }}

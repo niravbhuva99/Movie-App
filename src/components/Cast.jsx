@@ -42,11 +42,25 @@ const Cast = ({ movieId, cat }) => {
       style={{ filter: url.show ? "blur(5px)" : "blur(0px)" }}
       sx={{ width: "100%", mt: 2 }}
     >
-      <Box sx={{ width: "80%", margin: "auto" }}>
+      <Box
+        sx={{
+          width: "80%",
+          margin: {
+            md: "2 auto",
+            xs: "1 0",
+          },
+        }}
+      >
         <Typography
           variant="h3"
           color="whitesmoke"
-          sx={{ width: "100%", margin: "0 14px" }}
+          sx={{
+            width: "100%",
+            margin: {
+              md: "0 14px",
+              xs: 0,
+            },
+          }}
         >
           Cast
         </Typography>
@@ -54,16 +68,27 @@ const Cast = ({ movieId, cat }) => {
 
       <Box
         sx={{
-          width: "80%",
-          margin: " 0 auto",
-          // border: "1px dotted green",
+          width: {
+            xs: "100%",
+            md: "80%",
+          },
+          margin: {
+            xs: 0,
+            md: "0 auto",
+          },
           minHeight: "250px",
           position: "relative",
           display: "flex",
           justifyContent: "flex-start",
-          gap: 2,
+          gap: {
+            xs: 1,
+            md: 2,
+          },
           overflow: "hidden",
-          padding: 2,
+          padding: {
+            xs: 0,
+            md: 2,
+          },
         }}
       >
         <IconButton
@@ -75,7 +100,7 @@ const Cast = ({ movieId, cat }) => {
             zIndex: 10,
             "& svg": { fontSize: "55px" },
           }}
-          color="dark"
+          color="success"
           disableRipple
           onClick={() => scrollHandle("left")}
         >
@@ -91,7 +116,7 @@ const Cast = ({ movieId, cat }) => {
             zIndex: 10,
           }}
           onClick={() => scrollHandle("right")}
-          color="dark"
+          color="success"
           disableRipple
         >
           <KeyboardArrowRightIcon sx={{}} />
@@ -155,32 +180,44 @@ const Cast = ({ movieId, cat }) => {
       </Box>
       <Box
         sx={{
-          border: "2ps solid green",
           display: "flex",
-          width: "80%",
+          width: {
+            xs: "100%",
+            md: "100%",
+          },
           margin: "auto",
           flexDirection: "column",
           overflow: "hidden",
         }}
       >
-        <Typography variant="h4" color="wheat">
+        <Typography variant="h4" color="white" m={1}>
           Trailers
         </Typography>
         <Box
           sx={{
             width: "100%",
             display: "flex",
-            height: "250px",
+            mt: 3,
+            flexDirection: {
+              xs: "column",
+              md: "row",
+            },
+            height: {
+              md: "300px",
+            },
+            gap: {
+              xs: 2,
+              md: 1,
+            },
             justifyContent: "space-around",
           }}
         >
           {video?.videos?.results?.map((item, i) => {
-            if (i > 3) return;
+            if (i > 3) return "";
             const url = "https://img.youtube.com/vi/";
 
             return (
               <Card sx={{ minWidth: "315px", height: "200px" }} key={item.key}>
-                {/* <iframe src={url + item.key}></iframe> */}
                 <CardActionArea
                   sx={{
                     height: "100%",

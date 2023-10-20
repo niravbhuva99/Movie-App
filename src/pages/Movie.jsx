@@ -1,24 +1,19 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import useFetch from "../api/useFetch";
 import {
   Box,
   FormControl,
   InputLabel,
-  Menu,
   MenuItem,
-  OutlinedInput,
   Pagination,
   Stack,
   Select,
-  TextField,
   Typography,
-  Skeleton,
-  Avatar,
   LinearProgress,
 } from "@mui/material";
 import { useState } from "react";
 
-import Cards from "./Cards";
+import Cards from "../components/Cards";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchbar } from "../Store/HomeSlice";
 
@@ -39,8 +34,8 @@ const Movie = ({ cat = "movie" }) => {
   );
   useEffect(() => {
     dispatch(setSearchbar(true));
-    console.log("###");
-  }, []);
+  }, [dispatch]);
+
   const { data: genreData, loading: genreLoading } = useFetch(
     `/discover/${cat}?&page=${genrePage}&with_genres=${selectedGenre.join(",")}`
   );
@@ -51,23 +46,22 @@ const Movie = ({ cat = "movie" }) => {
     setGenrePage(value);
   };
 
-  const handleScroll = () => {
-    if (
-      !loading &&
-      window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.scrollHeight - 100
-    ) {
-      setPage((prevPage) => prevPage + 1);
-    }
-  };
-
   useEffect(() => {
+    const handleScroll = () => {
+      if (
+        !loading &&
+        window.innerHeight + document.documentElement.scrollTop >=
+          document.documentElement.scrollHeight - 100
+      ) {
+        setPage((prevPage) => prevPage + 1);
+      }
+    };
     window.addEventListener("scroll", handleScroll);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [loading]);
 
   useEffect(() => {
     if (!loading && data && data.results) {

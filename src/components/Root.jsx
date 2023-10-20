@@ -1,9 +1,8 @@
 import React from "react";
 import Navbar from "../header/Navbar";
-import Home from "./Home";
 import { Outlet } from "react-router-dom";
 import { Box, Stack } from "@mui/material";
-import Footer from "./Footer";
+
 const Root = () => {
   return (
     <Box sx={{ position: "relative" }}>
@@ -11,7 +10,6 @@ const Root = () => {
       <Stack direction="column" width="100vw">
         <Outlet />
       </Stack>
-      <Footer />
     </Box>
   );
 };

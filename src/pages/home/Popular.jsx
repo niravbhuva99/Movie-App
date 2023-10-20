@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import useFetch from "../api/useFetch";
-import Carousel from "./Carousel";
-const TopRated = () => {
+import useFetch from "../../api/useFetch";
+import Carousel from "../../components/Carousel";
+const Popular = () => {
   const [term, setTerm] = useState("movie");
-  const { data, loading, error } = useFetch(`/${term}/top_rated`);
+  const { data, loading } = useFetch(`/${term}/popular`);
 
   return (
     <Carousel
       data={data}
       loading={loading}
-      title="Top-Rated"
+      title="Popular"
       cat1="Movie"
       cat2="Tv- Shows"
       setTerm={setTerm}
@@ -18,4 +18,4 @@ const TopRated = () => {
   );
 };
 
-export default TopRated;
+export default Popular;

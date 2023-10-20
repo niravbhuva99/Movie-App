@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const useScroll = () => {
   const [data, setData] = useState({

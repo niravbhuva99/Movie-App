@@ -7,6 +7,7 @@ const options = {
   },
 };
 const fetchData = async (url = "") => {
+  console.log(BASEURL + url);
   const res = await fetch(BASEURL + url, options);
   const data = await res.json();
 

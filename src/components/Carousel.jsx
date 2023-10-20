@@ -3,23 +3,17 @@ import {
   Button,
   ButtonGroup,
   IconButton,
-  Skeleton,
   Stack,
-  Card,
   Typography,
 } from "@mui/material";
 import SkeletonCom from "./Skeleton";
 import React, { useRef, useState } from "react";
-import useFetch from "../api/useFetch";
-import { useSelector } from "react-redux";
+
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import LazyLoad from "react-lazy-load";
-import LazyLoading from "./LazyLoading";
+
 import Cards from "./Cards";
-import { useNavigate } from "react-router-dom";
 const Carousel = ({ setTerm, data, loading, title, cat2, cat1, term }) => {
-  // const { data, loading } = useFetch(`/trending/${term}/day`);
   const [active, setActive] = useState({ movie: true, tv: false });
   const CarouselContainer = useRef();
   const movieHandle = () => {
@@ -64,10 +58,8 @@ const Carousel = ({ setTerm, data, loading, title, cat2, cat1, term }) => {
         display: "flex",
         flexDirection: "column",
         width: "100%",
-        // justifyContent: "flex-sta",
         alignItems: "center",
         height: "480px",
-        // border: "2px solid red",
         mb: 1,
       }}
     >
@@ -101,7 +93,6 @@ const Carousel = ({ setTerm, data, loading, title, cat2, cat1, term }) => {
       <Box
         sx={{
           mt: 1,
-          // border: "2px solid red",
           width: "70%",
           height: "100%",
           p: 2,
@@ -146,12 +137,11 @@ const Carousel = ({ setTerm, data, loading, title, cat2, cat1, term }) => {
           //
           <Stack
             gap={2}
-            // sx={{ bgcolor: "grey.900" }}
             ref={CarouselContainer}
             overflow="hidden"
             direction="row"
           >
-            {data?.results.map((item, i) => {
+            {data?.results?.map((item, i) => {
               const { backdrop_path, original_title, genre_ids, name, id } =
                 item;
               return (

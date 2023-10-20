@@ -3,16 +3,11 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import { useState } from "react";
-import { Box } from "@mui/material";
 import YouTube from "react-youtube";
-import CloseIcon from "@mui/icons-material/Close";
 const VideoPage = ({ urlKey, show, setUrl }) => {
-  const [open, setOpen] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -21,8 +16,14 @@ const VideoPage = ({ urlKey, show, setUrl }) => {
       sx={{
         width: "100%",
         "& .MuiPaper-root ": {
-          minWidth: "700px",
-          height: "500px",
+          minWidth: {
+            xs: "100%",
+            md: "700px",
+          },
+          height: {
+            xs: "300px",
+            md: "500px",
+          },
         },
       }}
       fullScreen={fullScreen}

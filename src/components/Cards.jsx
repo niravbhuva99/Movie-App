@@ -27,7 +27,9 @@ const Cards = ({
   const navigate = useNavigate();
   const { imgUrl } = useSelector((state) => state.home);
   const { genres } = useSelector((state) => state.home);
-
+  const image = !backdrop_path
+    ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZa6iS4YcxZgCHJppoj_CCGT5Ofv_A2qRc_t_gIDOo&s"
+    : imgUrl + backdrop_path;
   return (
     <Card
       sx={{
@@ -35,7 +37,6 @@ const Cards = ({
         height,
         borderRadius: "15px",
         bgcolor: "black",
-        borderRadius: 0,
       }}
     >
       <CardActionArea
@@ -52,7 +53,7 @@ const Cards = ({
                   top: 0,
                 }}
               /> */}
-        <LazyLoading src={imgUrl + backdrop_path} />
+        <LazyLoading src={image} />
         <CardContent sx={{ position: "absolute", bottom: 0 }}>
           <Typography
             gutterBottom
@@ -75,7 +76,6 @@ const Cards = ({
             }}
           >
             {genre_ids.slice(0, 2).map((genre, i) => {
-              const defaultGenre = ["action", "crime", "drama", "mystery"];
               if (genres[genre]?.name) {
                 return (
                   <Button
@@ -95,13 +95,6 @@ const Cards = ({
                   </Button>
                 );
               }
-              // else {
-              //   return (
-              //     <Button key={i} label={defaultGenre[i]} color="secondary">
-              //       action
-              //     </Button>
-              //   );
-              // }
               return null;
             })}
           </Box>

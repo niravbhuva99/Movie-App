@@ -1,5 +1,5 @@
 import { Box, Stack, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import useFetch from "../api/useFetch";
 import Cards from "./Cards";
 
@@ -7,23 +7,16 @@ const Recommendations = ({ movieId, cat: term }) => {
   const { data } = useFetch(`/${term}/${movieId}/recommendations`);
   console.log(movieId, term, data);
 
-  // const InfinityScrollHandle = () => {
-  //   console.log("scrollHeight", document.documentElement.scrollHeight);
-  //   console.log("inderHeight", window.innerHeight);
-  //   console.log("scrollTop", document.documentElement.scrollTop);
-  // };
-  // useEffect(() => {
-  //   window.addEventListener("scroll", InfinityScrollHandle);
-  // });
   return (
     <React.Fragment>
       {data?.results?.length > 0 && (
         <Stack
           direction="column"
           sx={{
-            width: "80%",
-            // border: "2px solid grey",
-            margin: "auto",
+            width: {
+              sm: "100%",
+              md: "100%",
+            },
           }}
         >
           <Typography
@@ -39,8 +32,12 @@ const Recommendations = ({ movieId, cat: term }) => {
               width: "100%",
               display: "flex",
               flexDirection: "row",
+              justifyContent: "center",
               flexWrap: "wrap",
-              gap: 1,
+              gap: {
+                sm: 3,
+                lg: 1,
+              },
             }}
           >
             {data?.results.map((item) => {

@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./components/Home";
+import Home from "./pages/home/Home";
 import Error from "./pages/Error";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -11,14 +11,14 @@ import {
 } from "./Store/HomeSlice";
 import useFetch from "./api/useFetch";
 import Root from "./components/Root";
-import DetailsPage from "./components/detailspage/DetailsPage";
-import Movie from "./components/Movie";
-import Tv from "./components/Tv";
+import DetailsPage from "./pages/detailspage/DetailsPage";
+import Movie from "./pages/Movie";
+import Tv from "./pages/Tv";
 
 function App() {
   const { data } = useFetch("/genre/tv/list");
   const dispatch = useDispatch();
-
+  console.log(process.env.REACT_APP_AUTH);
   useEffect(() => {
     fetchData("/configuration").then((data) => {
       const base_url = data.images?.base_url + "original";
@@ -30,7 +30,7 @@ function App() {
     ].map((item) =>
       fetchData(`/genre/${item.cat}/list`).then((data) => {
         const allData = {};
-        data.genres.map((item) => (allData[item.name] = item));
+        data.genres?.map((item) => (allData[item.name] = item));
         dispatch(item.fn(allData));
       })
     );

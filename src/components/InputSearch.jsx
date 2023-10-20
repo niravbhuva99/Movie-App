@@ -77,9 +77,9 @@ const InputSearch = ({ width }) => {
               <Box
                 sx={{
                   "& > img": {
-                    mr: 2,
+                    m: "0 3",
                     flexShrink: 0,
-                    width: 90,
+                    width: 80,
                     objectFit: "cover",
                   },
                 }}

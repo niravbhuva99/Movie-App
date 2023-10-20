@@ -1,18 +1,31 @@
 import React from "react";
-import Navbar from "./Navbar";
 import Banner from "./Banner";
 import styles from "./Header.module.css";
-import { Box, Typography } from "@mui/material";
-import { AddBox } from "@mui/icons-material";
+
 import SearchBar from "../components/Searchbar";
+import { Box } from "@mui/material";
 const Header = () => {
   return (
     <React.Fragment>
-      <div className={styles.header}>
+      <Box
+        sx={{
+          width: "100%",
+          height: {
+            xs: "400px",
+            md: "700px",
+          },
+          overflow: "hidden",
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <Banner />
         <div className={styles.effect}></div>
         <SearchBar />
-      </div>
+      </Box>
     </React.Fragment>
   );
 };

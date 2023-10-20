@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import useFetch from "../api/useFetch";
-import Carousel from "./Carousel";
-import { DataArray } from "@mui/icons-material";
+import useFetch from "../../api/useFetch";
+import Carousel from "../../components/Carousel";
+
 const Trending = () => {
   const [term, setTerm] = useState("movie");
 
-  const { data, loading, error } = useFetch(`/trending/${term}/day`);
+  const { data, loading } = useFetch(`/trending/${term}/day`);
 
   return (
     <Carousel

@@ -15,11 +15,11 @@ import Button from "@mui/material/Button";
 import useScroll from "../hooks/useScrollListener/UseScroll";
 import { useState, useEffect } from "react";
 import "./Navbar.css";
-import { Link, NavLink, useParams } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import InputSearch from "../components/InputSearch";
-import { useDispatch, useSelector } from "react-redux";
-import { setSearchbar } from "../Store/HomeSlice";
+import { useSelector } from "react-redux";
 const drawerWidth = 240;
+
 const navItems = [
   { text: "Home", link: "/" },
   { text: "Movie", link: "/movie" },
