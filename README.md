@@ -1,5 +1,5 @@
 # Movie App
-# visit : https://movie-app-three-self.vercel.app
+# visit : https://movie-app-three-self.vercel.app/
 **Project Description:**  
 This is a movie app created using React, Material-UI (MUI), and Redux and React-router. It is my capstone project. The Movie App allows you to explore and discover the latest, popular, and top-rated movies and TV shows. You can also dive into the details of specific movies or TV shows, including their titles, ratings, production information, cast, genres, release dates, overviews, trailers, and recommendations.
 
