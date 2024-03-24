@@ -1,5 +1,5 @@
 const BASEURL = "https://api.themoviedb.org/3";
-// h
+// fetch data
 const options = {
   headers: {
     accept: "application/json",
