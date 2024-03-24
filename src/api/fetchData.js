@@ -1,5 +1,5 @@
 const BASEURL = "https://api.themoviedb.org/3";
-// h
+
 const options = {
   headers: {
     accept: "application/json",
@@ -14,3 +14,9 @@ const fetchData = async (url = "") => {
 };
 
 export default fetchData;
+
+const hello = () => {
+  console.log("hello");
+};
+
+hello();
